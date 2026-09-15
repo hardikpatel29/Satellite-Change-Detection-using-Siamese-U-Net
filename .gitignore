@@ -1,0 +1,86 @@
+# ==========================================
+# Git Ignore for Satellite Change Detection
+# ==========================================
+
+# --- Large Datasets & Archives ---
+# CRITICAL: GitHub rejects files > 100MB. Never commit datasets or ZIP archives.
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+Satellite image data set.zip
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# --- Model Checkpoints & Large Weights ---
+# Trained weights (.pth, .pt, .onnx, .ckpt) exceed GitHub recommended file limits.
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.bin
+*.onnx
+models/*
+!models/.gitkeep
+
+# --- Python Bytecode & Cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Jupyter Notebooks Checkpoints ---
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# --- Virtual Environments ---
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# --- IDEs and Text Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# --- OS-specific Artifacts ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# --- Logs & Temporary Files ---
+*.log
+scratch/
+tmp/
+temp/

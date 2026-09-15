@@ -1,0 +1,74 @@
+# ============================================================
+# Satellite Image Change Detection — Configuration
+# LEVIR-CD Dataset, Siamese U-Net
+# ============================================================
+
+# ---- Dataset -----------------------------------------------
+dataset:
+  name: "LEVIR-CD"
+  zip_path: "Satellite image data set.zip"   # path relative to project root
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  zip_inner_root: "LEVIR CD"                  # top-level folder inside ZIP
+  # Subdirectory names inside each split folder
+  before_dir: "A"       # before (T1) images
+  after_dir: "B"        # after  (T2) images
+  label_dir: "label"    # binary change masks
+
+# ---- Preprocessing -----------------------------------------
+preprocessing:
+  image_size: 256          # model input spatial size (crop / resize to this)
+  crop_mode: "random"      # "random" for train, "center" for val/test
+  normalize_mean: [0.485, 0.456, 0.406]   # ImageNet mean (RGB)
+  normalize_std:  [0.229, 0.224, 0.225]   # ImageNet std  (RGB)
+
+# ---- Registration ------------------------------------------
+registration:
+  enabled: true            # set false to skip ECC alignment
+  method: "ecc"            # "ecc" or "orb"
+  ecc_max_iters: 100
+  ecc_eps: 1.0e-5
+  warp_mode: "translation" # "translation" or "affine"
+
+# ---- Model -------------------------------------------------
+model:
+  encoder_channels: [64, 128, 256, 512]    # feature map channels per encoder stage
+  decoder_channels: [256, 128, 64, 32]     # decoder channels per stage
+  pretrained_encoder: false                 # set true to init encoder from ImageNet weights
+  dropout: 0.1
+
+# ---- Loss --------------------------------------------------
+loss:
+  bce_weight: 1.0      # weight for BCE component
+  dice_weight: 1.0     # weight for Dice component
+  # pos_weight handles the class imbalance (~96 % unchanged pixels)
+  # computed automatically from training set statistics; set manually to override
+  pos_weight: null     # null → compute from data; float → use given value
+
+# ---- Training ----------------------------------------------
+training:
+  seed: 42
+  epochs: 50
+  batch_size: 8
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  num_workers: 0           # 0 = main process (safest on Windows)
+  early_stopping_patience: 10
+  scheduler: "cosine"      # "cosine" | "step" | "plateau" | "none"
+  scheduler_T_max: 50      # for CosineAnnealingLR
+
+# ---- Evaluation & Inference --------------------------------
+evaluation:
+  threshold: 0.5           # binary threshold on sigmoid probability
+  save_predictions: true
+  num_visual_samples: 16   # how many test images to save as visuals
+
+# ---- Paths -------------------------------------------------
+paths:
+  models_dir: "models"
+  results_dir: "results"
+  predictions_dir: "results/predictions"
+  best_model: "models/best_model.pth"
+  final_model: "models/final_model.pth"
+  metrics_file: "results/metrics.json"
+  training_history_file: "results/training_history.json"

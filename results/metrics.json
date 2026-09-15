@@ -1,0 +1,9 @@
+{
+  "iou": 0.5811111371636424,
+  "dice": 0.7350667812081806,
+  "precision": 0.6630960958147565,
+  "recall": 0.8245626125845843,
+  "accuracy": 0.9701844453811529,
+  "threshold": 0.5,
+  "checkpoint": "models/best_model.pth"
+}
