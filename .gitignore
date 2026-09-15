@@ -15,6 +15,11 @@ data/raw/*
 data/processed/*
 !data/processed/.gitkeep
 
+# --- Documentation & Private Prep Files ---
+*.docx
+Satellite_Image_Change_Detection_Interview_Guide.docx
+
+
 # --- Model Checkpoints & Large Weights ---
 # Trained weights (.pth, .pt, .onnx, .ckpt) exceed GitHub recommended file limits.
 *.pth
