@@ -18,6 +18,8 @@ data/processed/*
 # --- Documentation & Private Prep Files ---
 *.docx
 Satellite_Image_Change_Detection_Interview_Guide.docx
+generate_interview_doc.py
+
 
 
 # --- Model Checkpoints & Large Weights ---
